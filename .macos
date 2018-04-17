@@ -190,6 +190,10 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 # Show battery percentage
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
+# Toggle between Light and Dark mode in Yosemite using ctrl+opt+cmd+t
+# http://www.reddit.com/r/apple/comments/2jr6s2/1010_i_found_a_way_to_dynamically_switch_between/
+sudo defaults write /Library/Preferences/.GlobalPreferences.plist _HIEnableThemeSwitchHotKey -bool true
+
 ###############################################################################
 # App Store                                                                   #
 ###############################################################################
