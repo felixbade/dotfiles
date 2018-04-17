@@ -58,6 +58,10 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 # Input/output devices                                                        #
 ###############################################################################
 
+# Key repeat speed
+defaults write -g KeyRepeat 3
+defaults write -g InitialKeyRepeat 15
+
 # Trackpad cursor speed
 defaults write -g com.apple.trackpad.scaling 1
 
