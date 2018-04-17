@@ -30,6 +30,7 @@ COMPUTER_HOSTNAME="${COMPUTER_NAME// /}" # should not have spaces
 #rm -rf ~/Library/Application Support/Dock/desktoppicture.db
 #sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
 #sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
+
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
 
