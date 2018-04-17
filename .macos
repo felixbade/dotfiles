@@ -80,10 +80,17 @@ defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
 # Input/output devices                                                        #
 ###############################################################################
 
+# Trackpad mouse speed
+defaults write -g com.apple.trackpad.scaling 6
+
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write -g com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write -g com.apple.mouse.tapBehavior -int 1 # for login screen
 defaults write -g com.apple.mouse.tapBehavior -int 1
+
+# Trackpad: enable 3-finger drag
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
 
 # Increase sound quality for Bluetooth headphones/headsets
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
@@ -196,6 +203,8 @@ defaults write com.apple.spotlight DictionaryLookupEnabled -bool false
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
+# Show battery percentage
+defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
 
 
