@@ -1,0 +1,98 @@
+# .bash_profile by Felix Bade
+# Created on 15.11.2014
+# Updated on 18.12.2016
+
+# include .bashrc if it exists
+if [ -f "$HOME/.bashrc" ]; then
+. "$HOME/.bashrc"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# create ~/.vimtmp if it does not exists
+if [ ! -d "$HOME/.vimtmp" ] ; then
+    echo "Created $HOME/.vimtmp"
+    mkdir $HOME/.vimtmp
+fi
+
+# set up virtualenvwrapper if it exists
+#if [ -f "/usr/local/bin/virtualenvwrapper.sh" ]; then
+#    export WORKON_HOME="~/Envs"
+#    export VIRTUAL_ENV_DISABLE_PROMPT=1
+#    source /usr/local/bin/virtualenvwrapper.sh
+#fi
+
+# set custom (nice) prompt
+export PS1='\n$(RETURNCODE=$?; echo -en "\033[33m"; (date +%H:%M:%S | tr -d "\n"); if [[ $RETURNCODE != 0 ]]; then echo " \[\e[1;91m\]($RETURNCODE)\[\e[m\]"; fi)\n\[\e[35m\]\h: \[\e[34m\]$(pwd)\[\e[94m\]$(GIT_BRANCH=$(git branch --no-color 2> /dev/null | grep "^\*" | sed "s/* //"); if [[ -n "$GIT_BRANCH" ]]; then echo -n " ($GIT_BRANCH)"; fi)\[\e[31m\]$(if [[ -n "$VIRTUAL_ENV" ]]; then echo -n " (${VIRTUAL_ENV##*/})"; fi)\n\[\e[32m\]\u \[\e[92m\]\$\[\e[m\] '
+export PS2='\[\e[92m\]$(echo -n "$USER"|sed "s/./ /g") >\[\e[m\] '
+
+set completion-ignore-case on
+
+# infinite history
+export HISTCONTROL=erasedups
+export HISTFILESIZE=1000000
+export HISTSIZE=1000000
+
+# utf-8 fix
+unset LC_CTYPE
+
+# For macOS
+if [ -d "$HOME/Documents" ] ; then
+    cd $HOME/Documents
+fi
+
+# Dictionary, uses www.sanakirja.org
+sanakirja ()
+{
+    # $1 mistä $2 mihin $3 sana
+    ef_tmp=$(curl --silent www.sanakirja.org/search.php?q=$3\&l=$1\&l2=$2);
+
+    # käännös löytyi
+    if [[ "$ef_tmp" =~ "<table id=\"translations\"" ]]; then
+        echo $ef_tmp | grep "<table id=\"translations\"" | tr "<" "\n" | grep "amp;l2=$1" | sed "s/.*>//" | tail -n +2;
+
+    # käännöstä ei löydy, ehdotukset
+    else
+        echo '-- Similar words --'
+        echo $ef_tmp | tr -d '\n' | sed -e 's/.*<div class="similar_words">//' -e 's/<\/div>.*//' -e 's/<li>/\
+/g' -e 's/<p>/\
+/' -e 's/[^<]*</</' -e 's/<[^>]*>//g' | tail -n +2;
+        echo
+    fi
+}
+# 3 = english
+# 17 = finnish
+# 15 = swedish
+ef() { sanakirja 3 17 $1;}
+fe() { sanakirja 17 3 $1;}
+sf() { sanakirja 15 17 $1;}
+fs() { sanakirja 17 15 $1;}
+
+
+
+sudo_() {
+    if [ $# -eq 0 ]; then
+        # Note: "$0" will not work
+        /usr/bin/sudo /bin/bash --rcfile "$HOME/.bash_profile"
+    else
+        /usr/bin/sudo $@
+    fi
+}
+alias sudo='sudo_'
+
+ls_() {
+    ls -F "$@" | grep -v '\.pyc$' | sed -e 's/\([^*/=>@|]\)$/\1 /' -e 's/\(.*\)\([ */=>@|]\)$/\2 \1/' -e 's/^@ /[35m/' -e 's/^\/ /[34m/ ' -e 's/^\* /[32m/' -e 's/^| /[33m/' -e 's/^  /[m/' -e 's/^/  /'
+}
+alias ls='ls_'
+
+cd_() {
+    if [ $# -eq 0 ]; then
+        cd ~ && ls -tr;
+    else
+        cd "$1" && ls -tr;
+    fi
+}
+alias cd='cd_'
