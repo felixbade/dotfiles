@@ -82,6 +82,7 @@ defaults write com.apple.universalaccess closeViewSmoothImages -int 0
 
 # Increase cursor size
 defaults write com.apple.universalaccess mouseDriverCursorSize -float 1.6
+defaults -currentHost write com.apple.universalaccess mouseDriverCursorSize -float 1.6
 
 ###############################################################################
 # Text input                                                                  #
