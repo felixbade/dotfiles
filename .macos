@@ -18,12 +18,12 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 ###############################################################################
 
 # Set computer name (as done via System Preferences → Sharing)
-COMPUTER_NAME="Felix"
+COMPUTER_NAME="Felix-MBP"
 COMPUTER_HOSTNAME="${COMPUTER_NAME// /}" # should not have spaces
-#sudo scutil --set ComputerName "$COMPUTER_NAME"
-#sudo scutil --set HostName "$COMPUTER_HOSTNAME"
-#sudo scutil --set LocalHostName "$COMPUTER_HOSTNAME"
-#sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
+sudo scutil --set ComputerName "$COMPUTER_NAME"
+sudo scutil --set HostName "$COMPUTER_HOSTNAME"
+sudo scutil --set LocalHostName "$COMPUTER_HOSTNAME"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
 
 # Set a custom wallpaper image. `DefaultDesktop.jpg` is already a symlink, and
 # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
@@ -190,10 +190,6 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 # Show battery percentage
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
-# Toggle between Light and Dark mode in Yosemite using ctrl+opt+cmd+t
-# http://www.reddit.com/r/apple/comments/2jr6s2/1010_i_found_a_way_to_dynamically_switch_between/
-sudo defaults write /Library/Preferences/.GlobalPreferences.plist _HIEnableThemeSwitchHotKey -bool true
-
 ###############################################################################
 # App Store                                                                   #
 ###############################################################################
@@ -233,12 +229,6 @@ defaults write com.apple.Safari WebKitMediaPlaybackAllowsInline -bool false
 defaults write com.apple.SafariTechnologyPreview WebKitMediaPlaybackAllowsInline -bool false
 defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
 defaults write com.apple.SafariTechnologyPreview com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
-
-# Do not preload Top Hits in the background
-defaults write com.apple.Safari PreloadTopHit -bool false
-
-# Show status bar
-defaults write com.apple.Safari ShowOverlayStatusBar -bool true
 
 ###############################################################################
 # Notes.app                                                                   #
@@ -319,6 +309,13 @@ defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
 defaults write com.apple.ActivityMonitor SortDirection -int 0
 
 ###############################################################################
+# iTunes                                                                      #
+###############################################################################
+
+# Don't automatically open iTunes when connecting iPhone for charging
+defaults write com.apple.iTunes dontAutomaticallySyncIPods 1
+
+###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 
@@ -333,6 +330,7 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 #	"Messages" \
 #	"Photos" \
 #	"Safari" \
+#	"iTunes" \
 #	"SystemUIServer" \
 #	"Terminal"; do
 #	killall "${app}" &> /dev/null
