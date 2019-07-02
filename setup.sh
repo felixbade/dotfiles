@@ -6,6 +6,7 @@ function title() {
 }
 
 source "$DIR/scripts/mouse.sh"
+source "$DIR/scripts/text-input.sh"
 source "$DIR/scripts/menu-bar.sh"
 source "$DIR/scripts/dock.sh"
 source "$DIR/scripts/spaces.sh"
