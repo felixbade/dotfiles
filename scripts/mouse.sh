@@ -11,6 +11,9 @@ defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 echo " - Enable 3-finger drag"
 defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -int 1
 
+echo " - Disable mouse acceleration"
+defaults write -g com.apple.mouse.scaling -1
+
 echo " - Enable zooming with ctrl + scroll"
 defaults -currentHost write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 defaults -currentHost write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
