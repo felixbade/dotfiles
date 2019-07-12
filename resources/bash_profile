@@ -28,6 +28,7 @@ fi
 # set custom (nice) prompt
 export PS1='\n$(RETURNCODE=$?; echo -en "\033[33m"; (date +%H:%M:%S | tr -d "\n"); if [[ $RETURNCODE != 0 ]]; then echo " \[\e[1;91m\]($RETURNCODE)\[\e[m\]"; fi)\n\[\e[35m\]\h: \[\e[34m\]$(pwd)\[\e[94m\]$(GIT_BRANCH=$(git branch --no-color 2> /dev/null | grep "^\*" | sed "s/* //"); if [[ -n "$GIT_BRANCH" ]]; then echo -n " ($GIT_BRANCH)"; fi)\[\e[31m\]$(if [[ -n "$VIRTUAL_ENV" ]]; then echo -n " (${VIRTUAL_ENV##*/})"; fi)\n\[\e[32m\]\u \[\e[92m\]\$\[\e[m\] '
 export PS2='\[\e[92m\]$(echo -n "$USER"|sed "s/./ /g") >\[\e[m\] '
+export VIRTUAL_ENV_DISABLE_PROMPT=1 # Avoid getting double virtualenv listing in PS1
 
 set completion-ignore-case on
 
