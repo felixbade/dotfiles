@@ -337,4 +337,4 @@ defaults write com.apple.iTunes dontAutomaticallySyncIPods 1
 #done
 #echo "Done. Note that some of these changes require a logout/restart to take effect."
 
-echo "Please logout/restart for changes to take effect."
+echo "Please logout/restart for all changes to take effect."
